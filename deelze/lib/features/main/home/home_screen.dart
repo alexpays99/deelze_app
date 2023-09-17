@@ -1,9 +1,16 @@
 import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
-import 'package:deelze/features/main/home_screen/widgets/greating_section.dart';
+import 'package:deelze/features/main/home/widgets/greating_section.dart';
 import 'package:flutter/material.dart';
 
-class DeelzeScreen extends StatelessWidget {
-  const DeelzeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isFavourite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,11 @@ class DeelzeScreen extends StatelessWidget {
         child: Column(
           children: [
             const GreatingSection(
-              image: "assets/images/logo.png",
+              title: 'Unwrap Joyful Saving: Your Best Dealls Await!',
+            ),
+            const SizedBox(height: 40.0),
+            Image.asset(
+              "assets/images/logo.png",
             ),
             ListView.builder(
               shrinkWrap: true,
@@ -24,9 +35,9 @@ class DeelzeScreen extends StatelessWidget {
                   child: VaucherListItemWidget(
                     title: '25% off on breakfast items',
                     vaucher: 'Bab Ali restaurant',
-                    image: "assets/images/qr_code.png",
+                    image: "assets/images/food.png",
                     price: '190 EGP',
-                    favouriteButtonVisibile: false,
+                    favouriteButtonVisibile: true,
                   ),
                 );
               },

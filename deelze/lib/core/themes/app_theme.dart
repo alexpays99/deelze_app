@@ -3,7 +3,9 @@ import 'package:deelze/core/utils/ui_constants.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData mainTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color.fromRGBO(239, 239, 239, 100),
+  ),
   useMaterial3: true,
   highlightColor: Colors.transparent,
   splashColor: Colors.transparent,

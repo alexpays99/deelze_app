@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
 
-class VaucherListItemWidget extends StatefulWidget {
-  const VaucherListItemWidget({
+class OfferHistoryWidget extends StatefulWidget {
+  const OfferHistoryWidget({
     super.key,
     required this.title,
     required this.vaucher,
     required this.price,
+    required this.date,
     required this.image,
-    required this.favouriteButtonVisibile,
   });
   final String title;
   final String vaucher;
   final String price;
+  final String date;
   final String image;
-  final bool favouriteButtonVisibile;
 
   @override
-  State<VaucherListItemWidget> createState() => _VaucherListItemWidgetState();
+  State<OfferHistoryWidget> createState() => _OfferHistoryWidgetState();
 }
 
-class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
+class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
   bool isFavourite = false;
+  final ColorFilter greyscale = const ColorFilter.matrix(<double>[
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+  ]);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,31 +71,49 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  widget.vaucher,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: const Color.fromRGBO(131, 131, 131, 1),
-                      ),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.vaucher,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: const Color.fromARGB(255, 50, 47, 47),
+                          ),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      widget.price,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: const Color.fromARGB(255, 243, 137, 8),
+                          ),
+                    ),
+                  ],
                 ),
               ),
               Row(
                 children: [
                   FittedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 243, 137, 8),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.price,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                    child: ColorFiltered(
+                      colorFilter: greyscale,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 243, 137, 8),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            widget.date,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  color: Colors.white,
+                                ),
+                          ),
                         ),
                       ),
                     ),
@@ -86,24 +126,15 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'Get directions',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          'Get directions',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.5,
                                     color: Colors.white,
                                   ),
-                            ),
-                          ],
                         ),
                       ),
                     ),
@@ -114,31 +145,24 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
           ),
           Expanded(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isFavourite = !isFavourite;
-                    });
-                  },
-                  icon: widget.favouriteButtonVisibile
-                      ? FavouriteIconWidget(isFavourite: isFavourite)
-                      : const SizedBox.shrink(),
-                ),
-                Expanded(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
-                    child: Image.asset(
-                      widget.image,
+                    child: ColorFiltered(
+                      colorFilter: greyscale,
+                      child: Image.asset(
+                        widget.image,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16)
               ],
             ),
           ),
+          const SizedBox(width: 16),
         ],
       ),
     );

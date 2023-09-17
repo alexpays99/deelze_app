@@ -2,10 +2,11 @@ import 'package:deelze/core/presentation/network_wrapper.dart';
 import 'package:deelze/features/auth/enter_code_screen/enter_code_screen.dart';
 import 'package:deelze/features/auth/intro_screen/intro_scfreen.dart';
 import 'package:deelze/features/auth/signup_signin_screen/signin_signup_screen.dart';
-import 'package:deelze/features/main/deelse_screen/deelze_screen.dart';
-import 'package:deelze/features/main/favourite_screen/favourite_screen.dart';
-import 'package:deelze/features/main/home_screen/home_screen.dart';
-import 'package:deelze/features/main/profile_screen/profile_screen.dart';
+import 'package:deelze/features/main/deelse/deelze_screen.dart';
+import 'package:deelze/features/main/favourite/favourite_screen.dart';
+import 'package:deelze/features/main/home/home_screen.dart';
+import 'package:deelze/features/main/home/order_history/offers_history_screen.dart';
+import 'package:deelze/features/main/profile/profile_screen.dart';
 import 'package:deelze/navigation/bottom_navigaion_bar.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ final _sectionNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'Profile');
 final _sectionNavigatorDeelzeKey =
     GlobalKey<NavigatorState>(debugLabel: 'Deelze');
+
+final _sectionNavigatorOrderHistoryKey =
+    GlobalKey<NavigatorState>(debugLabel: 'OrderHistory');
 
 class GoRouterNavigation {
   GoRouter initGoRoute() {
@@ -95,6 +99,18 @@ class GoRouterNavigation {
                       path: RoutePaths.deelze,
                       name: RoutePaths.deelze,
                       builder: (context, state) => const DeelzeScreen(),
+                    ),
+                  ],
+                ),
+
+                // Offers History
+                StatefulShellBranch(
+                  navigatorKey: _sectionNavigatorOrderHistoryKey,
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: RoutePaths.orderHistory,
+                      name: RoutePaths.orderHistory,
+                      builder: (context, state) => const OffersHistoryScreen(),
                     ),
                   ],
                 ),
