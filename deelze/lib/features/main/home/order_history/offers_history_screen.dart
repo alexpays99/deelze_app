@@ -100,7 +100,7 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(239, 239, 239, 100),
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
