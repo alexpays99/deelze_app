@@ -38,7 +38,6 @@ class IntroScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/logo.png",
-                      fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width,
                     ),

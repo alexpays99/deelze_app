@@ -36,7 +36,6 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                   const Spacer(),
                   Image.asset(
                     "assets/images/logo.png",
-                    fit: BoxFit.cover,
                     width: MediaQuery.of(context).size.width / 2,
                     height: MediaQuery.of(context).size.width / 2,
                   ),
@@ -45,7 +44,7 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
               ),
               Image.asset(
                 "assets/images/signin_signup_avatar_picker.png",
-                fit: BoxFit.contain,
+                // fit: BoxFit.contain,
               ),
               const SizedBox(height: 20),
               Text(

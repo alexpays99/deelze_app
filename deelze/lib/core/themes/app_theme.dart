@@ -17,7 +17,7 @@ final ThemeData mainTheme = ThemeData(
     // Default text
     bodySmall: UIConstants.textStyle,
     // Recipe text
-    bodyMedium: UIConstants.recipeTextStyle,
+    // bodyMedium: UIConstants.recipeTextStyle,
     // Recipe title
     bodyLarge: UIConstants.recipeTitleStyle,
     // Recipe subtitle
