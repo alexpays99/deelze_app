@@ -118,7 +118,10 @@ class GreatingSection extends StatelessWidget {
                   ),
                   const SizedBox(width: 8.0),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(
+                          "${RoutePaths.authWrapper}/${RoutePaths.scanQrCode}");
+                    },
                     child: Container(
                       width: 45,
                       height: 45,

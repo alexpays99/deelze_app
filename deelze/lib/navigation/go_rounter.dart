@@ -8,6 +8,7 @@ import 'package:deelze/features/main/home/home_screen.dart';
 import 'package:deelze/features/main/home/order_history/offers_history_screen.dart';
 import 'package:deelze/features/main/payment_details_screen/payment_details_screen.dart';
 import 'package:deelze/features/main/profile/profile_screen.dart';
+import 'package:deelze/features/main/scan_qr_code_screen/scan_qr_code_screen.dart';
 import 'package:deelze/navigation/bottom_navigaion_bar.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ final _sectionNavigatorOrderHistoryKey =
     GlobalKey<NavigatorState>(debugLabel: 'OrderHistory');
 final _sectionNavigatorPaymentDetailsKey =
     GlobalKey<NavigatorState>(debugLabel: 'PaymentDetails');
+final _sectionNavigatorScanQrCodeKey =
+    GlobalKey<NavigatorState>(debugLabel: 'ScanQrCode');
 
 class GoRouterNavigation {
   GoRouter initGoRoute() {
@@ -126,6 +129,18 @@ class GoRouterNavigation {
                       path: RoutePaths.paymentDetails,
                       name: RoutePaths.paymentDetails,
                       builder: (context, state) => const PaymentDetailsScreen(),
+                    ),
+                  ],
+                ),
+
+                // Scan Qr code
+                StatefulShellBranch(
+                  navigatorKey: _sectionNavigatorScanQrCodeKey,
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: RoutePaths.scanQrCode,
+                      name: RoutePaths.scanQrCode,
+                      builder: (context, state) => const ScanQrCodeScreen(),
                     ),
                   ],
                 ),
