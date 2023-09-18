@@ -357,6 +357,7 @@ class ProfileScreen extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 print('Edit avatar');
+                //
               },
               child: const Stack(
                 alignment: Alignment.bottomRight,
