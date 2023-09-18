@@ -1,4 +1,6 @@
+import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OfferHistoryWidget extends StatefulWidget {
   const OfferHistoryWidget({
@@ -119,22 +121,30 @@ class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
                     ),
                   ),
                   const SizedBox(width: 8.0),
-                  FittedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(7, 106, 127, 1),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          'Get directions',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.5,
-                                    color: Colors.white,
-                                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context.push(
+                          "${RoutePaths.authWrapper}/${RoutePaths.paymentDetails}");
+                    },
+                    child: FittedBox(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(7, 106, 127, 1),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            'Get directions',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  color: Colors.white,
+                                ),
+                          ),
                         ),
                       ),
                     ),

@@ -8,4 +8,5 @@ abstract class RoutePaths {
   static const profile = "recipes";
   static const deelze = "deelze";
   static const orderHistory = "orderHistory";
+  static const paymentDetails = "paymentDetails";
 }

@@ -209,7 +209,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                       Spacer(),
                       Icon(
                         Icons.favorite,
-                        // size: 20,
                       ),
                       Spacer(),
                       Text(
@@ -353,7 +352,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                   child: Image.asset(
                     'assets/images/tabbar_logo1.png',
                   ),
-                  // child: const Icon(Icons.shopping_cart),
                 ),
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:deelze/features/main/deelse/deelze_screen.dart';
 import 'package:deelze/features/main/favourite/favourite_screen.dart';
 import 'package:deelze/features/main/home/home_screen.dart';
 import 'package:deelze/features/main/home/order_history/offers_history_screen.dart';
+import 'package:deelze/features/main/payment_details_screen/payment_details_screen.dart';
 import 'package:deelze/features/main/profile/profile_screen.dart';
 import 'package:deelze/navigation/bottom_navigaion_bar.dart';
 import 'package:deelze/navigation/router_paths.dart';
@@ -23,6 +24,8 @@ final _sectionNavigatorDeelzeKey =
 
 final _sectionNavigatorOrderHistoryKey =
     GlobalKey<NavigatorState>(debugLabel: 'OrderHistory');
+final _sectionNavigatorPaymentDetailsKey =
+    GlobalKey<NavigatorState>(debugLabel: 'PaymentDetails');
 
 class GoRouterNavigation {
   GoRouter initGoRoute() {
@@ -111,6 +114,18 @@ class GoRouterNavigation {
                       path: RoutePaths.orderHistory,
                       name: RoutePaths.orderHistory,
                       builder: (context, state) => const OffersHistoryScreen(),
+                    ),
+                  ],
+                ),
+
+                // Payment Details
+                StatefulShellBranch(
+                  navigatorKey: _sectionNavigatorPaymentDetailsKey,
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: RoutePaths.paymentDetails,
+                      name: RoutePaths.paymentDetails,
+                      builder: (context, state) => const PaymentDetailsScreen(),
                     ),
                   ],
                 ),
