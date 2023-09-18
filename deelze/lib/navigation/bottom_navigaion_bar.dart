@@ -84,7 +84,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
             icon: const SizedBox(
               width: UIConstants.tabContainerWidth,
               height: UIConstants.tabContainerHeight,
-              child: Icon(Icons.add),
+              child: Icon(Icons.person),
             ),
             activeIcon: Container(
               width: UIConstants.tabContainerWidth,
@@ -95,7 +95,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
                   Radius.circular(UIConstants.tabContainerRadius),
                 ),
               ),
-              child: const Icon(Icons.add_circle_rounded),
+              child: const Icon(Icons.person_rounded),
             ),
             label: "Profile",
           ),

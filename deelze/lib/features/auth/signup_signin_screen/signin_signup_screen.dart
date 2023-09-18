@@ -112,6 +112,7 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                                   const Color.fromRGBO(7, 106, 127, 100),
                               textStyle: const TextStyle(
                                 fontSize: 18,
+                                fontWeight: FontWeight.w200,
                                 color: Color.fromRGBO(7, 105, 127, 1),
                               ),
                               onSaved: (PhoneNumber number) {
