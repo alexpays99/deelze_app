@@ -33,9 +33,9 @@ abstract class AppColors {
   static const Color seeLess = Colors.blue;
 
   // BottomNavigationBar colors
-  static const Color selectedBackgroundTab = Color(0xFF3C3E44);
-  static const Color selectedIcon = Color(0xFFABDAE1);
-  static const Color unselectedIcon = Color(0xFFFFFFFF);
+  static const Color selectedBackgroundTab = Color.fromRGBO(239, 239, 239, 100);
+  static const Color selectedIcon = Color(0xFFFFFFFF);
+  static const Color unselectedIcon = Color.fromARGB(255, 243, 149, 8);
 
   static final List<Color> recipeColors = [
     Colors.black.withOpacity(0.4),

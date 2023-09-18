@@ -61,8 +61,9 @@ class UIConstants {
 
   static const double tabContainerRadius = 50.0;
 
-  static const double tabContainerWidth = 64.0;
-  static const double tabContainerHeight = 32.0;
+  static const double tabContainerWidth = 55.0;
+  static const double tabContainerHeight = 55.0;
+  static const double tabSelectedContainerWidth = 200.0;
 
   // Nutritional supplements constants
   static const double nutritionalSupplementsItemHeight = 65;

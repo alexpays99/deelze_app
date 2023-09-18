@@ -38,85 +38,371 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         unselectedFontSize: UIConstants.unselectedFontSize,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.scaffoldColor,
+        type: BottomNavigationBarType.shifting,
+        backgroundColor: Colors.white, // AppColors.scaffoldColor,
         onTap: _onTap,
         items: [
           BottomNavigationBarItem(
-            icon: const SizedBox(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              child: Icon(Icons.home_outlined),
-            ),
-            activeIcon: Container(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              decoration: const BoxDecoration(
-                color: AppColors.selectedBackgroundTab,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(UIConstants.tabContainerRadius),
+            icon: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(50),
                 ),
               ),
-              child: const Icon(Icons.home),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabContainerWidth,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: const BoxDecoration(
+                    color: AppColors.selectedBackgroundTab,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                  ),
+                  child: const Icon(Icons.home),
+                ),
+              ),
             ),
-            label: "Home",
+            activeIcon: Container(
+              width: UIConstants.tabSelectedContainerWidth,
+              height: UIConstants.tabContainerHeight,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(UIConstants.tabContainerRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabSelectedContainerWidth - 2,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(7, 106, 127, 1),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Icon(Icons.home),
+                      Spacer(),
+                      Text(
+                        "Home",
+                        style: TextStyle(
+                          fontFamily: "Nutrio",
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: const SizedBox(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              child: Icon(Icons.favorite_outline),
-            ),
-            activeIcon: Container(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              decoration: const BoxDecoration(
-                color: AppColors.selectedBackgroundTab,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(UIConstants.tabContainerRadius),
+            icon: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(50),
                 ),
               ),
-              child: const Icon(Icons.favorite),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabContainerWidth,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: const BoxDecoration(
+                    color: AppColors.selectedBackgroundTab,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                  ),
+                  child: const Icon(Icons.favorite),
+                ),
+              ),
             ),
-            label: "Favourite",
+            activeIcon: Container(
+              width: 190, // UIConstants.tabSelectedContainerWidth,
+              height: UIConstants.tabContainerHeight,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(UIConstants.tabContainerRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabSelectedContainerWidth - 2,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(7, 106, 127, 1),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Icon(
+                        Icons.favorite,
+                        // size: 20,
+                      ),
+                      Spacer(),
+                      Text(
+                        "Favorite",
+                        style: TextStyle(
+                          fontFamily: "Nutrio",
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: const SizedBox(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              child: Icon(Icons.person),
-            ),
-            activeIcon: Container(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              decoration: const BoxDecoration(
-                color: AppColors.selectedBackgroundTab,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(UIConstants.tabContainerRadius),
+            icon: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(50),
                 ),
               ),
-              child: const Icon(Icons.person_rounded),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabContainerWidth,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: const BoxDecoration(
+                    color: AppColors.selectedBackgroundTab,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                  ),
+                  child: const Icon(Icons.person),
+                ),
+              ),
             ),
-            label: "Profile",
+            activeIcon: Container(
+              width: UIConstants.tabSelectedContainerWidth,
+              height: UIConstants.tabContainerHeight,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(UIConstants.tabContainerRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabSelectedContainerWidth - 2,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(7, 106, 127, 1),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Icon(Icons.person),
+                      Spacer(),
+                      Text(
+                        "Profile",
+                        style: TextStyle(
+                          fontFamily: "Nutrio",
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: const SizedBox(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              child: Icon(Icons.shopping_cart_outlined),
-            ),
-            activeIcon: Container(
-              width: UIConstants.tabContainerWidth,
-              height: UIConstants.tabContainerHeight,
-              decoration: const BoxDecoration(
-                color: AppColors.selectedBackgroundTab,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(UIConstants.tabContainerRadius),
+            icon: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(50),
                 ),
               ),
-              child: const Icon(Icons.shopping_cart),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabContainerWidth,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: const BoxDecoration(
+                    color: AppColors.selectedBackgroundTab,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                  ),
+                  child: Image.asset(
+                    'assets/images/tabbar_logo1.png',
+                  ),
+                  // child: const Icon(Icons.shopping_cart),
+                ),
+              ),
             ),
-            label: "Deelze",
+            activeIcon: Container(
+              width: UIConstants.tabSelectedContainerWidth,
+              height: UIConstants.tabContainerHeight,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(UIConstants.tabContainerRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: UIConstants.tabSelectedContainerWidth - 2,
+                  height: UIConstants.tabContainerHeight,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(7, 106, 127, 1),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(UIConstants.tabContainerRadius),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/images/tabbar_logo.png',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            label: "",
           ),
         ],
       ),
