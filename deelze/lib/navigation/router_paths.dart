@@ -10,4 +10,5 @@ abstract class RoutePaths {
   static const orderHistory = "orderHistory";
   static const paymentDetails = "paymentDetails";
   static const scanQrCode = "scanQrCode";
+  static const vaucherInfo = "vaucherInfo";
 }
