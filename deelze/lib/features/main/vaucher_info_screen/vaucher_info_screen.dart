@@ -233,7 +233,6 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       setState(() {
                         _openMap = !_openMap;
                       });
-                      // context.pop();
                     },
                     child: Image.asset('assets/images/close_map_icon.png'),
                   ),

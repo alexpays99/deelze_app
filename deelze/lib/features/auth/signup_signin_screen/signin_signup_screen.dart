@@ -44,7 +44,6 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
               ),
               Image.asset(
                 "assets/images/signin_signup_avatar_picker.png",
-                // fit: BoxFit.contain,
               ),
               const SizedBox(height: 20),
               Text(

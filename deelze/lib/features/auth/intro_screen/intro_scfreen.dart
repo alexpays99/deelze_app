@@ -16,11 +16,16 @@ class IntroScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Text(
-              'Instane Deals Personalized for you',
-              textAlign: TextAlign.right,
-              style:
-                  Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                'Instane Deals Personalized for you',
+                textAlign: TextAlign.right,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: 50),
+              ),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height / 5,
@@ -47,9 +52,9 @@ class IntroScreen extends StatelessWidget {
             ),
             Positioned(
               bottom: 64,
-              child: InkWell(
-                onTap: () => context
-                    .go("${RoutePaths.authWrapper}/${RoutePaths.signinSignup}"),
+              child: GestureDetector(
+                onTap: () => context.push(
+                    "${RoutePaths.authWrapper}/${RoutePaths.signinSignup}"),
                 child: Container(
                   width: 243,
                   height: 64,
@@ -63,7 +68,7 @@ class IntroScreen extends StatelessWidget {
                       width: 220,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 211, 211, 211),
+                        color: const Color.fromRGBO(239, 239, 239, 100),
                         borderRadius: BorderRadius.circular(42),
                       ),
                       child: Row(

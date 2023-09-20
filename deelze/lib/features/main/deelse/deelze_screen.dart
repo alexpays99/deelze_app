@@ -27,6 +27,7 @@ class DeelzeScreen extends StatelessWidget {
                     image: "assets/images/qr_code.png",
                     price: '190 EGP',
                     favouriteButtonVisibile: false,
+                    hasQrCode: true,
                   ),
                 );
               },
