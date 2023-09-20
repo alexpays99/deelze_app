@@ -1,8 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class ScanQrCodeScreen extends StatelessWidget {
+class ScanQrCodeScreen extends StatefulWidget {
   const ScanQrCodeScreen({super.key});
+
+  @override
+  State<ScanQrCodeScreen> createState() => _ScanQrCodeScreenState();
+}
+
+class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final scannedCode = TextEditingController(text: 'QR Code');
+  late QRViewController? controller;
+  late Barcode? result;
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller?.dispose();
+    scannedCode.dispose();
+  }
+
+  Widget buildQrCodeView() {
+    const scanArea = 200.0;
+
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: const Color.fromRGBO(239, 239, 239, 1),
+        overlayColor: const Color.fromRGBO(239, 239, 239, 1),
+        // borderRadius: 10,
+        // borderLength: 30,
+        // borderWidth: 10,
+        cutOutSize: scanArea,
+      ),
+      onPermissionSet: (ctrl, p) => onPermissionSet(context, ctrl, p),
+    );
+  }
+
+  Future<void> _onQRViewCreated(QRViewController controller) async {
+    this.controller = controller;
+    controller.scannedDataStream.listen(
+      (scanData) {
+        setState(() {
+          result = scanData;
+          scannedCode.text = scanData.code ?? '';
+        });
+        controller.pauseCamera();
+        Future.delayed(const Duration(seconds: 1), () {});
+      },
+      onDone: () {
+        print('finished scannind');
+      },
+    );
+  }
+
+  void onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    print('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('no Permission'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +90,7 @@ class ScanQrCodeScreen extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
                     GestureDetector(
@@ -56,6 +120,23 @@ class ScanQrCodeScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 36),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/scan_wrapper.png',
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          height: MediaQuery.of(context).size.width / 1.5,
+                          color: const Color.fromRGBO(112, 112, 112, 100),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          width: MediaQuery.of(context).size.width / 2,
+                          height: MediaQuery.of(context).size.width / 2,
+                          child: buildQrCodeView(),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
