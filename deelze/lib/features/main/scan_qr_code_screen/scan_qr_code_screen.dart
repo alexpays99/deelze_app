@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -31,9 +32,6 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
       overlay: QrScannerOverlayShape(
         borderColor: const Color.fromRGBO(239, 239, 239, 1),
         overlayColor: const Color.fromRGBO(239, 239, 239, 1),
-        // borderRadius: 10,
-        // borderLength: 30,
-        // borderWidth: 10,
         cutOutSize: scanArea,
       ),
       onPermissionSet: (ctrl, p) => onPermissionSet(context, ctrl, p),
@@ -92,16 +90,16 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                        child: Image.asset('assets/images/arrow_back.png'),
-                      ),
-                    ),
+                    const SizedBox(height: 60),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     context.pop();
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                    //     child: Image.asset('assets/images/arrow_back.png'),
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,6 +148,20 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
                 //
               },
               child: Image.asset('assets/images/scan_icon.png'),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height / 5,
+            left: 0,
+            child: GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                // child: Image.asset('assets/images/arrow_back.png'),
+                child: SvgPicture.asset("assets/images/arrow_back.svg"),
+              ),
             ),
           ),
         ],

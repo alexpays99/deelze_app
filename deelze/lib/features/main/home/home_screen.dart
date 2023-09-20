@@ -2,6 +2,7 @@ import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
 import 'package:deelze/features/main/home/widgets/greating_section.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,9 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
               title: 'Unwrap Joyful Saving: Your Best Dealls Await!',
             ),
             const SizedBox(height: 40.0),
-            Image.asset(
-              "assets/images/logo.png",
-            ),
+            // Image.asset(
+            //   "assets/images/logo.png",
+            // ),
+            SvgPicture.asset("assets/images/logo.svg"),
             ListView.builder(
               shrinkWrap: true,
               itemCount: 10,

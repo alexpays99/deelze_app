@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class VaucherInfoScreen extends StatefulWidget {
   const VaucherInfoScreen({super.key});
@@ -205,29 +208,52 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
             Positioned.fill(
               child: DecoratedBox(
                 decoration: const BoxDecoration(color: Colors.white),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    // horizontal: MediaQuery.of(context).size.width /,
+                    vertical: MediaQuery.of(context).size.height / 5,
+                  ),
+                  child: Card(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2,
-                      decoration: BoxDecoration(
-                        // color: Colors.amberAccent,
-                        borderRadius: BorderRadius.circular(30),
-                        image: DecorationImage(
-                          image:
-                              Image.asset('assets/images/map_image.png').image,
-                        ),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                      // child: const MapSample(),
+                      child: const GoogleMap(
+                        initialCameraPosition:
+                            CameraPosition(target: LatLng(40, 29), zoom: 10),
                       ),
                     ),
                   ),
                 ),
               ),
+              // DecoratedBox(
+              //   decoration: const BoxDecoration(color: Colors.white),
+              //   child: Center(
+              //     child: Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              //       child: Container(
+              //         width: MediaQuery.of(context).size.width,
+              //         height: MediaQuery.of(context).size.height / 2,
+              //         decoration: BoxDecoration(
+              //           // color: Colors.amberAccent,
+              //           borderRadius: BorderRadius.circular(30),
+              //           image: DecorationImage(
+              //             image:
+              //                 Image.asset('assets/images/map_image.png').image,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ),
           _openMap
               ? Positioned(
-                  top: MediaQuery.of(context).size.height / 6,
-                  right: 70,
+                  top: MediaQuery.of(context).size.height / 5.5,
+                  // right: 70,
+                  right: 0,
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -241,5 +267,58 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
         ],
       ),
     );
+  }
+}
+
+class MapSample extends StatefulWidget {
+  const MapSample({super.key});
+
+  @override
+  State<MapSample> createState() => MapSampleState();
+}
+
+class MapSampleState extends State<MapSample> {
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static const CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
+
+  @override
+  Widget build(BuildContext context) {
+    return GoogleMap(
+      mapType: MapType.hybrid,
+      initialCameraPosition: _kGooglePlex,
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
+    );
+    // Scaffold(
+    //   body: GoogleMap(
+    //     mapType: MapType.hybrid,
+    //     initialCameraPosition: _kGooglePlex,
+    //     onMapCreated: (GoogleMapController controller) {
+    //       _controller.complete(controller);
+    //     },
+    //   ),
+    //   floatingActionButton: FloatingActionButton.extended(
+    //     onPressed: _goToTheLake,
+    //     label: const Text('To the lake!'),
+    //     icon: const Icon(Icons.directions_boat),
+    //   ),
+    // );
+  }
+
+  Future<void> _goToTheLake() async {
+    final GoogleMapController controller = await _controller.future;
+    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

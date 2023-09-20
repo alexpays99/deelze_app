@@ -1,6 +1,7 @@
 import 'package:deelze/core/presentation/widgets/custon_text_button.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -42,9 +43,10 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                   const Spacer(),
                 ],
               ),
-              Image.asset(
-                "assets/images/signin_signup_avatar_picker.png",
-              ),
+              // Image.asset(
+              //   "assets/images/signin_signup_avatar_picker.png",
+              // ),
+              SvgPicture.asset("assets/images/signin_signup_avatar_picker.svg"),
               const SizedBox(height: 20),
               Text(
                 'Sign in / Sign up',

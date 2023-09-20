@@ -54,7 +54,9 @@ class _EmailPasswordTextFieldSState extends State<EmailPasswordTextFieldS> {
       controller: controller,
       obscureText: hidePassword,
       onChanged: widget.onChanged,
-      style: style.textTheme.titleSmall,
+      style: style.textTheme.bodySmall?.copyWith(
+        color: const Color.fromRGBO(131, 131, 131, 1),
+      ),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,

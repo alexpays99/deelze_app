@@ -1,5 +1,6 @@
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class PaymentDetailsScreen extends StatelessWidget {
@@ -323,8 +324,9 @@ class PaymentDetailsScreen extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 print('Edit avatar');
-                //
               },
+              // child: SvgPicture.asset('assets/images/payment_details_icon.svg',
+              //     semanticsLabel: 'Acme Logo'),
               child: const CircleAvatar(
                 radius: 60,
                 backgroundImage:

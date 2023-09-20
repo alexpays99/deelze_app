@@ -2,6 +2,7 @@ import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
 import 'package:deelze/features/main/home/widgets/greating_section.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class FavouriteScreen extends StatelessWidget {

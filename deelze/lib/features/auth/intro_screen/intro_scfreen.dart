@@ -1,5 +1,6 @@
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -31,6 +32,7 @@ class IntroScreen extends StatelessWidget {
               top: MediaQuery.of(context).size.height / 5,
               left: -150,
               child: Container(
+                alignment: Alignment.centerRight,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -38,16 +40,21 @@ class IntroScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       MediaQuery.of(context).size.width / 1.5),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Image.asset(
-                      "assets/images/logo.png",
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 40.0),
+                  child: SvgPicture.asset("assets/images/logo.svg"),
                 ),
+
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Image.asset(
+                //       "assets/images/logo.png",
+                //       width: MediaQuery.of(context).size.width,
+                //       height: MediaQuery.of(context).size.width,
+                //     ),
+                //   ],
+                // ),
               ),
             ),
             Positioned(

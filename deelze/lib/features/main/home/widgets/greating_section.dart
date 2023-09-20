@@ -1,5 +1,6 @@
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class GreatingSection extends StatelessWidget {
@@ -39,7 +40,8 @@ class GreatingSection extends StatelessWidget {
                     radius: 40,
                     child: CircleAvatar(
                       radius: 35,
-                      backgroundImage: AssetImage('assets/images/food.png'),
+                      backgroundImage:
+                          AssetImage('assets/images/avatar_placeholder.png'),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -174,6 +176,7 @@ class GreatingSection extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(left: 16.0, bottom: 32.0),
                         child: Image.asset(image ?? ''),
+                        // child: SvgPicture.asset(image ?? ''),
                       ),
                     ),
             ],
