@@ -12,6 +12,8 @@ class VaucherInfoScreen extends StatefulWidget {
 
 class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
   bool _openMap = false;
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +209,9 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
           if (_openMap)
             Positioned.fill(
               child: DecoratedBox(
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     // horizontal: MediaQuery.of(context).size.width /,
@@ -219,11 +223,38 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       height: MediaQuery.of(context).size.height / 2,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(50))),
-                      // child: const MapSample(),
-                      child: const GoogleMap(
-                        initialCameraPosition:
-                            CameraPosition(target: LatLng(40, 29), zoom: 10),
-                      ),
+                      child: const MapSample(),
+                      // child: GoogleMap(
+                      //   initialCameraPosition: const CameraPosition(
+                      //       target: LatLng(40, 29), zoom: 10),
+                      //   onMapCreated: (GoogleMapController controller) {
+                      //     _controller.complete(controller);
+                      //   },
+                      // ),
+                      // child: FlutterMap(
+                      //   options: MapOptions(
+                      //     center: const LatLng(51.509364, -0.128928),
+                      //     zoom: 9.2,
+                      //   ),
+                      //   nonRotatedChildren: const [
+                      //     RichAttributionWidget(
+                      //       attributions: [
+                      //         TextSourceAttribution(
+                      //           'OpenStreetMap contributors',
+                      //           // onTap: () => launchUrl(Uri.parse(
+                      //           //     'https://openstreetmap.org/copyright')),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      //   children: [
+                      //     TileLayer(
+                      //       urlTemplate:
+                      //           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      //       userAgentPackageName: 'com.example.app',
+                      //     ),
+                      //   ],
+                      // ),
                     ),
                   ),
                 ),
