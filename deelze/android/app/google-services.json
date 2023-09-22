@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592166478639",
+    "project_id": "deelze-b979a",
+    "storage_bucket": "deelze-b979a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592166478639:android:11186c9caa7759cb4a77da",
+        "android_client_info": {
+          "package_name": "com.example.deelze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA74ZHakINq-cGc9_621Ume2h2Yakz7DQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
