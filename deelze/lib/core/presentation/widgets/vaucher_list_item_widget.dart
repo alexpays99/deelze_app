@@ -9,6 +9,7 @@ class VaucherListItemWidget extends StatefulWidget {
     required this.image,
     required this.favouriteButtonVisibile,
     this.hasQrCode,
+    this.onTap,
   });
   final String title;
   final String vaucher;
@@ -16,6 +17,7 @@ class VaucherListItemWidget extends StatefulWidget {
   final String image;
   final bool favouriteButtonVisibile;
   final bool? hasQrCode;
+  final void Function()? onTap;
 
   @override
   State<VaucherListItemWidget> createState() => _VaucherListItemWidgetState();
@@ -137,16 +139,10 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                           : const SizedBox.shrink(),
                     ),
                     Expanded(
-                      child: GestureDetector(
-                        onTap: widget.hasQrCode != null && widget.hasQrCode!
-                            ? () {
-                                setState(() {
-                                  _qrCodeIncreased = !_qrCodeIncreased;
-                                });
-                              }
-                            : null,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(24),
+                        child: GestureDetector(
+                          onTap: widget.onTap,
                           child: Image.asset(
                             widget.image,
                           ),
@@ -161,21 +157,16 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
           ),
         ),
         if (_qrCodeIncreased)
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 2,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
-                        image: Image.asset(widget.image).image,
-                      ),
-                    ),
+          DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Center(
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  image: DecorationImage(
+                    image: Image.asset(widget.image).image,
                   ),
                 ),
               ),

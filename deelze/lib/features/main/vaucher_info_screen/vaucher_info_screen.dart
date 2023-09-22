@@ -12,8 +12,6 @@ class VaucherInfoScreen extends StatefulWidget {
 
 class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
   bool _openMap = false;
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +32,15 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                 flexibleSpace: Stack(
                   children: [
                     Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Image.asset(
-                          'assets/images/info_appbar_image.png',
-                          fit: BoxFit.fill,
-                        )),
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Image.asset(
+                        'assets/images/info_appbar_image.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                     Positioned(
                       bottom: -1,
                       left: 0,
@@ -231,54 +230,10 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       //     _controller.complete(controller);
                       //   },
                       // ),
-                      // child: FlutterMap(
-                      //   options: MapOptions(
-                      //     center: const LatLng(51.509364, -0.128928),
-                      //     zoom: 9.2,
-                      //   ),
-                      //   nonRotatedChildren: const [
-                      //     RichAttributionWidget(
-                      //       attributions: [
-                      //         TextSourceAttribution(
-                      //           'OpenStreetMap contributors',
-                      //           // onTap: () => launchUrl(Uri.parse(
-                      //           //     'https://openstreetmap.org/copyright')),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      //   children: [
-                      //     TileLayer(
-                      //       urlTemplate:
-                      //           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      //       userAgentPackageName: 'com.example.app',
-                      //     ),
-                      //   ],
-                      // ),
                     ),
                   ),
                 ),
               ),
-              // DecoratedBox(
-              //   decoration: const BoxDecoration(color: Colors.white),
-              //   child: Center(
-              //     child: Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              //       child: Container(
-              //         width: MediaQuery.of(context).size.width,
-              //         height: MediaQuery.of(context).size.height / 2,
-              //         decoration: BoxDecoration(
-              //           // color: Colors.amberAccent,
-              //           borderRadius: BorderRadius.circular(30),
-              //           image: DecorationImage(
-              //             image:
-              //                 Image.asset('assets/images/map_image.png').image,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ),
           _openMap
               ? Positioned(
