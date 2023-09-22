@@ -283,7 +283,6 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
           _openMap
               ? Positioned(
                   top: MediaQuery.of(context).size.height / 5.5,
-                  // right: 70,
                   right: 0,
                   child: GestureDetector(
                     onTap: () {
@@ -291,7 +290,20 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                         _openMap = !_openMap;
                       });
                     },
-                    child: Image.asset('assets/images/close_map_icon.png'),
+                    // child: Image.asset('assets/images/close_map_icon.png'),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.amber,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 35,
+                      ),
+                    ),
                   ),
                 )
               : const SizedBox.shrink(),

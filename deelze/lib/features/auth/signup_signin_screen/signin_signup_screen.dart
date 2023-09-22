@@ -95,9 +95,13 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                               ignoreBlank: false,
                               hintText: 'Enter phone number',
                               autoValidateMode: AutovalidateMode.disabled,
+                              // selectorTextStyle: const TextStyle(
+                              //   color: Color.fromRGBO(7, 105, 127, 1),
+                              // ),
                               selectorTextStyle: const TextStyle(
-                                color: Color.fromRGBO(7, 105, 127, 1),
+                                color: Color.fromRGBO(169, 202, 209, 1),
                               ),
+
                               initialValue: null,
                               textFieldController: numberController,
                               formatInput: false,
@@ -109,8 +113,8 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                                     BorderRadius.all(Radius.circular(40)),
                               ),
                               textAlign: TextAlign.left,
-                              cursorColor:
-                                  const Color.fromRGBO(7, 106, 127, 100),
+                              // cursorColor:
+                              //     const Color.fromRGBO(7, 106, 127, 100),
                               textStyle: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w200,

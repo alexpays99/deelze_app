@@ -40,35 +40,39 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 220,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(42),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            '+201012345678',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(7, 106, 127, 1),
+                    child: GestureDetector(
+                      onTap: () => context.pop(),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 220,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(42),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              '+201012345678',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromRGBO(7, 106, 127, 1),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(42),
+                            const SizedBox(width: 16),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(42),
+                              ),
+                              child:
+                                  Image.asset('assets/images/pencil_icon.png'),
                             ),
-                            child: Image.asset('assets/images/pencil_icon.png'),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
