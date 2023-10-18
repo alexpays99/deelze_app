@@ -1,6 +1,8 @@
 import 'package:deelze/core/presentation/widgets/custon_text_button.dart';
+import 'package:deelze/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -43,9 +45,6 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                   const Spacer(),
                 ],
               ),
-              // Image.asset(
-              //   "assets/images/signin_signup_avatar_picker.png",
-              // ),
               SvgPicture.asset("assets/images/signin_signup_avatar_picker.svg"),
               const SizedBox(height: 20),
               Text(
@@ -83,13 +82,17 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                           children: [
                             InternationalPhoneNumberInput(
                               onInputChanged: (PhoneNumber number) {
-                                print(number.phoneNumber);
+                                context.read<AuthBloc>().add(
+                                    AuthEvent.enterPhone(number.phoneNumber));
+                                // numberController.text =
+                                //     number.phoneNumber ?? '';
+                                // print(numberController.text);
                               },
                               onInputValidated: (bool value) {
                                 print(value);
                               },
                               selectorConfig: const SelectorConfig(
-                                selectorType: PhoneInputSelectorType.DROPDOWN,
+                                selectorType: PhoneInputSelectorType.DIALOG,
                                 trailingSpace: false,
                               ),
                               ignoreBlank: false,
@@ -125,14 +128,36 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
                               },
                             ),
                             const SizedBox(height: 80),
-                            CustomTextButton(
-                              width: 220,
-                              height: 60,
-                              text: "Send",
-                              color: const Color.fromRGBO(7, 105, 127, 1),
-                              onTap: () {
-                                context.push(
-                                    "${RoutePaths.authWrapper}/${RoutePaths.enterCode}");
+                            BlocBuilder<AuthBloc, AuthState>(
+                              builder: (context, state) {
+                                return CustomTextButton(
+                                  width: 220,
+                                  height: 60,
+                                  text: "Send",
+                                  color: state.maybeWhen(
+                                    buttonEnable: () =>
+                                        const Color.fromRGBO(7, 105, 127, 1),
+                                    buttonDisable: () => const Color.fromARGB(
+                                        255, 131, 142, 144),
+                                    orElse: () => const Color.fromARGB(
+                                        255, 131, 142, 144),
+                                  ),
+                                  onTap: state == const AuthState.buttonEnable()
+                                      ? () {
+                                          context.read<AuthBloc>().add(
+                                                AuthEvent.sendOpt(context
+                                                    .read<AuthBloc>()
+                                                    .phoneNumber),
+                                              );
+                                          context.push(
+                                            "${RoutePaths.authWrapper}/${RoutePaths.enterCode}",
+                                            extra: context
+                                                .read<AuthBloc>()
+                                                .phoneNumber,
+                                          );
+                                        }
+                                      : null,
+                                );
                               },
                             ),
                           ],

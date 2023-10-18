@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDUznj_rl8SYO9N_mcInUOlR2ueHx5z00w',
-    appId: '1:592166478639:web:831094f38d60b2074a77da',
-    messagingSenderId: '592166478639',
-    projectId: 'deelze-b979a',
-    authDomain: 'deelze-b979a.firebaseapp.com',
-    storageBucket: 'deelze-b979a.appspot.com',
-    measurementId: 'G-NTFGLWJ662',
+    apiKey: 'AIzaSyBBfU6TKMSMcAa0KDGVvQvTPRQBw8yR71E',
+    appId: '1:644074355722:web:404a2655b44bf0599fb3f3',
+    messagingSenderId: '644074355722',
+    projectId: 'posmission-dev',
+    authDomain: 'posmission-dev.firebaseapp.com',
+    storageBucket: 'posmission-dev.appspot.com',
+    measurementId: 'G-BZH00RSMEZ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA74ZHakINq-cGc9_621Ume2h2Yakz7DQk',
-    appId: '1:592166478639:android:11186c9caa7759cb4a77da',
-    messagingSenderId: '592166478639',
-    projectId: 'deelze-b979a',
-    storageBucket: 'deelze-b979a.appspot.com',
+    apiKey: 'AIzaSyCuRVPcRaQii2gb6JkHR77OYV6LPMKZ-Jg',
+    appId: '1:644074355722:android:ee866101995549519fb3f3',
+    messagingSenderId: '644074355722',
+    projectId: 'posmission-dev',
+    storageBucket: 'posmission-dev.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAjBZg_UaQo8rf-qIaGqPVKAU6CyJv_lBk',
-    appId: '1:592166478639:ios:5dcd25c43d415c284a77da',
-    messagingSenderId: '592166478639',
-    projectId: 'deelze-b979a',
-    storageBucket: 'deelze-b979a.appspot.com',
+    apiKey: 'AIzaSyAPD6pmg0DzyENV0T9l5Tmuk4-ksI4aSzg',
+    appId: '1:644074355722:ios:42f9c5e5470623b49fb3f3',
+    messagingSenderId: '644074355722',
+    projectId: 'posmission-dev',
+    storageBucket: 'posmission-dev.appspot.com',
     iosBundleId: 'com.example.deelze',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAjBZg_UaQo8rf-qIaGqPVKAU6CyJv_lBk',
-    appId: '1:592166478639:ios:35fca11cd5c25d3e4a77da',
-    messagingSenderId: '592166478639',
-    projectId: 'deelze-b979a',
-    storageBucket: 'deelze-b979a.appspot.com',
+    apiKey: 'AIzaSyAPD6pmg0DzyENV0T9l5Tmuk4-ksI4aSzg',
+    appId: '1:644074355722:ios:0dc753af8625c9039fb3f3',
+    messagingSenderId: '644074355722',
+    projectId: 'posmission-dev',
+    storageBucket: 'posmission-dev.appspot.com',
     iosBundleId: 'com.example.deelze.RunnerTests',
   );
 }

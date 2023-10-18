@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
 import 'package:deelze/features/main/home/widgets/greating_section.dart';
 import 'package:deelze/navigation/router_paths.dart';
@@ -30,29 +31,71 @@ class _HomeScreenState extends State<HomeScreen> {
             //   "assets/images/logo.png",
             // ),
             SvgPicture.asset("assets/images/logo.svg"),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, bottom: 20),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.push(
-                          "${RoutePaths.authWrapper}/${RoutePaths.vaucherInfo}");
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Restaurants")
+                  .snapshots(),
+              builder: ((context, snapshot) {
+                final restaurants = snapshot.data?.docs;
+
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: restaurants?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final logo = restaurants![index]["logo"] as String;
+                      final title = restaurants![index]["name"] as String;
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 20),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(
+                                "${RoutePaths.authWrapper}/${RoutePaths.vaucherInfo}");
+                          },
+                          child: VaucherListItemWidget(
+                            title: title,
+                            vaucher: title,
+                            image: logo,
+                            price: '190 EGP',
+                            favouriteButtonVisibile: true,
+                          ),
+                        ),
+                      );
                     },
-                    child: const VaucherListItemWidget(
-                      title: '25% off on breakfast items',
-                      vaucher: 'Bab Ali restaurant',
-                      image: "assets/images/food.png",
-                      price: '190 EGP',
-                      favouriteButtonVisibile: true,
-                    ),
-                  ),
-                );
-              },
-            )
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
+            ),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   itemCount: 10,
+            //   itemBuilder: (context, index) {
+            //     return Padding(
+            //       padding: const EdgeInsets.only(
+            //           left: 20.0, right: 20.0, bottom: 20),
+            //       child: GestureDetector(
+            //         onTap: () {
+            //           context.push(
+            //               "${RoutePaths.authWrapper}/${RoutePaths.vaucherInfo}");
+            //         },
+            //         child: const VaucherListItemWidget(
+            //           title: '25% off on breakfast items',
+            //           vaucher: 'Bab Ali restaurant',
+            //           image: "assets/images/food.png",
+            //           price: '190 EGP',
+            //           favouriteButtonVisibile: true,
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // )
           ],
         ),
       ),

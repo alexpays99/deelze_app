@@ -1,6 +1,10 @@
+import 'package:deelze/core/presentation/bloc/timer_bloc.dart';
 import 'package:deelze/core/themes/app_theme.dart';
-import 'package:deelze/features/auth/cubit/bloc/auth_bloc.dart';
+import 'package:deelze/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:deelze/firebase_options.dart';
+
 import 'package:deelze/navigation/go_rounter.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:deelze/dependencies.dart' as di;
@@ -8,15 +12,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 final _router = di.getIt<GoRouterNavigation>().initGoRoute();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   di.InjectionContainer.initDependencyInjection();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
           create: (BuildContext context) =>
               di.getIt<AuthBloc>()..add(const AuthEvent.checkAuthStatus()),
+        ),
+        BlocProvider<TimerBloc>(
+          create: (BuildContext context) => di.getIt<TimerBloc>(),
         ),
       ],
       child: const MyApp(),

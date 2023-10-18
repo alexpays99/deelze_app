@@ -1,7 +1,7 @@
 import 'package:deelze/core/presentation/network_wrapper.dart';
-import 'package:deelze/features/auth/enter_code_screen/enter_code_screen.dart';
-import 'package:deelze/features/auth/intro_screen/intro_scfreen.dart';
-import 'package:deelze/features/auth/signup_signin_screen/signin_signup_screen.dart';
+import 'package:deelze/features/auth/presentation/enter_code_screen/enter_code_screen.dart';
+import 'package:deelze/features/auth/presentation/intro_screen/intro_scfreen.dart';
+import 'package:deelze/features/auth/presentation/signup_signin_screen/signin_signup_screen.dart';
 import 'package:deelze/features/main/deelse/deelze_screen.dart';
 import 'package:deelze/features/main/favourite/favourite_screen.dart';
 import 'package:deelze/features/main/home/home_screen.dart';
@@ -14,6 +14,7 @@ import 'package:deelze/navigation/bottom_navigaion_bar.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'Home');
@@ -56,10 +57,18 @@ class GoRouterNavigation {
               builder: (context, state) => const SigninSignupScreen(),
             ),
             GoRoute(
-              path: RoutePaths.enterCode,
-              name: RoutePaths.enterCode,
-              builder: (context, state) => const EnterCodeScreen(),
-            ),
+                path: RoutePaths.enterCode,
+                name: RoutePaths.enterCode,
+                builder: (context, state) {
+                  final phone = state.extra;
+                  if (phone is String) {
+                    return EnterCodeScreen(phoneNumber: phone);
+                  } else {
+                    return Container();
+                  }
+                  // return const EnterCodeScreen();
+                } // => const EnterCodeScreen(),
+                ),
             StatefulShellRoute.indexedStack(
               parentNavigatorKey: _rootNavigatorKey,
               builder: (context, state, navigationShell) {

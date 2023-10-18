@@ -1,4 +1,4 @@
-import 'package:deelze/features/auth/cubit/bloc/auth_bloc.dart';
+import 'package:deelze/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

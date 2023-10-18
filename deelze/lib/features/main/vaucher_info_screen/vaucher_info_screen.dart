@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class VaucherInfoScreen extends StatefulWidget {
-  const VaucherInfoScreen({super.key});
-
+  const VaucherInfoScreen({
+    super.key,
+    required this.title,
+    required this.vaucher,
+  });
+  final String title;
+  final String vaucher;
   @override
   State<VaucherInfoScreen> createState() => _VaucherInfoScreenState();
 }

@@ -1,26 +1,65 @@
 {
   "project_info": {
-    "project_number": "592166478639",
-    "project_id": "deelze-b979a",
-    "storage_bucket": "deelze-b979a.appspot.com"
+    "project_number": "644074355722",
+    "project_id": "posmission-dev",
+    "storage_bucket": "posmission-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:592166478639:android:11186c9caa7759cb4a77da",
+        "mobilesdk_app_id": "1:644074355722:android:ee866101995549519fb3f3",
         "android_client_info": {
           "package_name": "com.example.deelze"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "644074355722-c9dn2aubfhm0omgbt0jm6ev4qrtklmm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyA74ZHakINq-cGc9_621Ume2h2Yakz7DQk"
+          "current_key": "AIzaSyCuRVPcRaQii2gb6JkHR77OYV6LPMKZ-Jg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644074355722-c9dn2aubfhm0omgbt0jm6ev4qrtklmm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644074355722:android:10eea9ee6660eeae9fb3f3",
+        "android_client_info": {
+          "package_name": "com.posmission.pos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644074355722-c9dn2aubfhm0omgbt0jm6ev4qrtklmm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuRVPcRaQii2gb6JkHR77OYV6LPMKZ-Jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644074355722-c9dn2aubfhm0omgbt0jm6ev4qrtklmm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
