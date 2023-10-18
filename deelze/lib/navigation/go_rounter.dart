@@ -57,18 +57,17 @@ class GoRouterNavigation {
               builder: (context, state) => const SigninSignupScreen(),
             ),
             GoRoute(
-                path: RoutePaths.enterCode,
-                name: RoutePaths.enterCode,
-                builder: (context, state) {
-                  final phone = state.extra;
-                  if (phone is String) {
-                    return EnterCodeScreen(phoneNumber: phone);
-                  } else {
-                    return Container();
-                  }
-                  // return const EnterCodeScreen();
-                } // => const EnterCodeScreen(),
-                ),
+              path: RoutePaths.enterCode,
+              name: RoutePaths.enterCode,
+              builder: (context, state) {
+                final phone = state.extra;
+                if (phone is String) {
+                  return EnterCodeScreen(phoneNumber: phone);
+                } else {
+                  return Container();
+                }
+              },
+            ),
             StatefulShellRoute.indexedStack(
               parentNavigatorKey: _rootNavigatorKey,
               builder: (context, state, navigationShell) {
@@ -164,7 +163,27 @@ class GoRouterNavigation {
                     GoRoute(
                       path: RoutePaths.vaucherInfo,
                       name: RoutePaths.vaucherInfo,
-                      builder: (context, state) => const VaucherInfoScreen(),
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, dynamic>;
+                        final title = extra["title"];
+                        final vaucher = extra["vaucher"];
+                        final logo = extra["logo"];
+                        final lattitude = extra["lattitude"];
+                        final longitude = extra["longitude"];
+                        if (title != null && vaucher != null) {
+                          return VaucherInfoScreen(
+                            title: title,
+                            vaucher: vaucher,
+                            image:
+                                logo ?? 'assets/images/info_appbar_image.png',
+                            lattitude: lattitude,
+                            longitude: longitude,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                      // builder: (context, state) => const VaucherInfoScreen(),
                     ),
                   ],
                 ),

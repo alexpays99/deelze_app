@@ -43,19 +43,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     shrinkWrap: true,
                     itemCount: restaurants?.length ?? 0,
                     itemBuilder: (context, index) {
-                      final logo = restaurants![index]["logo"] as String;
-                      final title = restaurants![index]["name"] as String;
+                      final title = restaurants?[index]["name"] as String;
+                      final vaucher = restaurants?[index]["name"] as String;
+                      final logo = restaurants?[index]["logo"] as String;
+                      final lattitude =
+                          restaurants?[index]["location"]["lat"] as double;
+                      final longitude =
+                          restaurants?[index]["location"]["lng"] as double;
                       return Padding(
                         padding: const EdgeInsets.only(
                             left: 20.0, right: 20.0, bottom: 20),
                         child: GestureDetector(
                           onTap: () {
                             context.push(
-                                "${RoutePaths.authWrapper}/${RoutePaths.vaucherInfo}");
+                              "${RoutePaths.authWrapper}/${RoutePaths.vaucherInfo}",
+                              extra: {
+                                "title": title,
+                                "vaucher": vaucher,
+                                "logo": logo,
+                                "lattitude": lattitude,
+                                "longitude": longitude,
+                              },
+                            );
                           },
                           child: VaucherListItemWidget(
                             title: title,
-                            vaucher: title,
+                            vaucher: vaucher,
                             image: logo,
                             price: '190 EGP',
                             favouriteButtonVisibile: true,

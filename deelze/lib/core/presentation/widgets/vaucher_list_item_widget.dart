@@ -143,9 +143,13 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                         borderRadius: BorderRadius.circular(24),
                         child: GestureDetector(
                           onTap: widget.onTap,
-                          child: Image.asset(
-                            widget.image,
-                          ),
+                          child: widget.image == ""
+                              ? Image.network(
+                                  "https://via.placeholder.com/200x200.png?fa=user&bg=3498db&fg=ffffff",
+                                )
+                              : Image.network(
+                                  widget.image,
+                                ),
                         ),
                       ),
                     ),

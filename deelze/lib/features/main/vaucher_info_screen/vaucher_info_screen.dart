@@ -8,9 +8,16 @@ class VaucherInfoScreen extends StatefulWidget {
     super.key,
     required this.title,
     required this.vaucher,
+    required this.image,
+    required this.lattitude,
+    required this.longitude,
   });
   final String title;
   final String vaucher;
+  final String image;
+  final double lattitude;
+  final double longitude;
+
   @override
   State<VaucherInfoScreen> createState() => _VaucherInfoScreenState();
 }
@@ -20,6 +27,7 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("lattitude: ${widget.lattitude},longitude: ${widget.longitude}");
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -41,8 +49,9 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      child: Image.asset(
-                        'assets/images/info_appbar_image.png',
+                      child: Image.network(
+                        widget.image,
+                        // 'assets/images/info_appbar_image.png',
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -71,9 +80,10 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Day use for 430 egp',
-                            style: TextStyle(
+                          Text(
+                            // 'Day use for 430 egp',
+                            widget.title,
+                            style: const TextStyle(
                               fontFamily: "Nutrio",
                               fontSize: 24.0,
                               fontWeight: FontWeight.w500,
@@ -81,9 +91,10 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                             ),
                           ),
                           const SizedBox(height: 8.0),
-                          const Text(
-                            'Splash aqua park',
-                            style: TextStyle(
+                          Text(
+                            // 'Splash aqua park',
+                            widget.vaucher,
+                            style: const TextStyle(
                               fontFamily: "Nutrio",
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
@@ -227,14 +238,10 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                       height: MediaQuery.of(context).size.height / 2,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(50))),
-                      child: const MapSample(),
-                      // child: GoogleMap(
-                      //   initialCameraPosition: const CameraPosition(
-                      //       target: LatLng(40, 29), zoom: 10),
-                      //   onMapCreated: (GoogleMapController controller) {
-                      //     _controller.complete(controller);
-                      //   },
-                      // ),
+                      child: MapSample(
+                        lat: widget.lattitude,
+                        lng: widget.longitude,
+                      ),
                     ),
                   ),
                 ),
@@ -250,7 +257,6 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                         _openMap = !_openMap;
                       });
                     },
-                    // child: Image.asset('assets/images/close_map_icon.png'),
                     child: Container(
                       width: 40,
                       height: 40,
@@ -274,7 +280,14 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
 }
 
 class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+  const MapSample({
+    super.key,
+    required this.lat,
+    required this.lng,
+  });
+
+  final double lat;
+  final double lng;
 
   @override
   State<MapSample> createState() => MapSampleState();
@@ -284,44 +297,17 @@ class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      mapType: MapType.hybrid,
-      initialCameraPosition: _kGooglePlex,
+      mapType: MapType.normal,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(widget.lat, widget.lng),
+        zoom: 14.4746,
+      ),
       onMapCreated: (GoogleMapController controller) {
         _controller.complete(controller);
       },
     );
-    // Scaffold(
-    //   body: GoogleMap(
-    //     mapType: MapType.hybrid,
-    //     initialCameraPosition: _kGooglePlex,
-    //     onMapCreated: (GoogleMapController controller) {
-    //       _controller.complete(controller);
-    //     },
-    //   ),
-    //   floatingActionButton: FloatingActionButton.extended(
-    //     onPressed: _goToTheLake,
-    //     label: const Text('To the lake!'),
-    //     icon: const Icon(Icons.directions_boat),
-    //   ),
-    // );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
