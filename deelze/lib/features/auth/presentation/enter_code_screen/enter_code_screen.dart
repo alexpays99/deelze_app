@@ -27,7 +27,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
   void initState() {
     super.initState();
     context.read<AuthBloc>().add(const AuthEvent.checkAuthStatus());
-    // context.read<TimerBloc>().add(const Start(duration: 60));
+    context.read<TimerBloc>().add(const Start(duration: 60));
     print("EnterCodeScreen: ${widget.phoneNumber}");
   }
 
@@ -185,15 +185,16 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                           width: 220,
                           height: 60,
                           text: "Send",
-                          color: state is Running
-                              ? const Color.fromARGB(255, 104, 105, 105)
-                              : const Color.fromRGBO(7, 105, 127, 1),
+                          // color: state is Running
+                          //     ? const Color.fromARGB(255, 104, 105, 105)
+                          //     : const Color.fromRGBO(7, 105, 127, 1),
+                          color: const Color.fromRGBO(7, 105, 127, 1),
                           onTap: () {
-                            // context.read<AuthBloc>().add(AuthEvent.verifyOpt(
-                            //     context.read<AuthBloc>().smsCode));
+                            context.read<AuthBloc>().add(AuthEvent.verifyOpt(
+                                context.read<AuthBloc>().smsCode));
 
-                            context.go(
-                                "${RoutePaths.authWrapper}/${RoutePaths.home}");
+                            // context.go(
+                            //     "${RoutePaths.authWrapper}/${RoutePaths.home}");
                           },
                         ),
                         //   onTap: state is Running

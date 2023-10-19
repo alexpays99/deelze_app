@@ -79,15 +79,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 }
               },
               (String verificationId, int? resendToken) async {
-                // Update the UI - wait for the user to enter the SMS code
-                // String smsCode = 'xxxx';
-                // Create a PhoneAuthCredential with the code
+                // // Update the UI - wait for the user to enter the SMS code
+                // // String smsCode = 'xxxx';
+                // // Create a PhoneAuthCredential with the code
                 verificationID = verificationId;
 
-                PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                    verificationId: verificationId, smsCode: smsCode);
-                // Sign the user in (or link) with the credential
-                await FirebaseAuth.instance.signInWithCredential(credential);
+                // PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                //     verificationId: verificationId, smsCode: smsCode);
+                // // Sign the user in (or link) with the credential
+                // await FirebaseAuth.instance.signInWithCredential(credential);
               },
               (String verificationId) {},
             );
@@ -96,8 +96,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           }
         },
         verifyOpt: (code) async {
-          final res =
-              await _authServive.verifyAndLogin(verificationID, smsCode);
+          smsCode = "123456";
+          try {
+            final res =
+                await _authServive.verifyAndLogin(verificationID, smsCode);
+            if (res != null) {
+              emit(const AuthState.loggedIn());
+              // UNCOMMENT THIS CODE WHEN PERMISSIONS TO ADD NEW ITEMS IN COLLECTIONS WILL BE AVAILABLE
+              // final doesUserExist =
+              //     await _authServive.doesUserExist(phoneNumber ?? "");
+              // if (doesUserExist) {
+              //   _authServive.addUser(phoneNumber ?? '');
+              //   emit(const AuthState.loggedIn());
+              // }
+            }
+
+            print("USER_CREDENTIALS: $res");
+            print("CURRENT_USER: ${FirebaseAuth.instance.currentUser}");
+          } catch (e) {
+            emit(const AuthState.loggedOut());
+            print(e);
+          }
         },
       );
     });

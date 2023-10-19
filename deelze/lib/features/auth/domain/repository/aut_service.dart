@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServive {
@@ -78,14 +79,41 @@ class AuthServive {
   }
 
   // verify and login code
-  Future<UserCredential> verifyAndLogin(
+  Future<UserCredential?> verifyAndLogin(
       String verificationId, String smsCode) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
-    AuthCredential authCredential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    return await auth.signInWithCredential(authCredential);
+    try {
+      AuthCredential authCredential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+      return await auth.signInWithCredential(authCredential);
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  // add new user to colledtion of Users
+  Future<void> addUser(String phone) async {
+    CollectionReference users = FirebaseFirestore.instance.collection("Users");
+    // Add the user to the 'users' collection
+    await users.add({
+      "createdAt": DateTime.now().toString(),
+      "name": "moderator",
+      "phone": phone,
+      "email": "",
+      // Add other properties here
+    });
+  }
+
+  Future<bool> doesUserExist(String phoneNumber) async {
+    final usersCollection = FirebaseFirestore.instance.collection("Users");
+
+    final querySnapshot =
+        await usersCollection.where("phone", isEqualTo: phoneNumber).get();
+
+    return querySnapshot.docs.isNotEmpty;
   }
 
   // get current authorized user

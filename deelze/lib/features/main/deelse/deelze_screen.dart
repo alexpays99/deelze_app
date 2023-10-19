@@ -1,6 +1,7 @@
 import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
 import 'package:deelze/features/main/home/widgets/greating_section.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class DeelzeScreen extends StatefulWidget {
   const DeelzeScreen({super.key});
@@ -11,6 +12,7 @@ class DeelzeScreen extends StatefulWidget {
 
 class _DeelzeScreenState extends State<DeelzeScreen> {
   bool _increaseQrCode = false;
+  String qrData = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,23 +37,16 @@ class _DeelzeScreenState extends State<DeelzeScreen> {
                       child: VaucherListItemWidget(
                         title: '25% off on breakfast items',
                         vaucher: 'Bab Ali restaurant',
-                        image: "assets/images/qr_code.png",
                         price: '190 EGP',
+                        qrData: index.toString(),
                         favouriteButtonVisibile: false,
                         hasQrCode: true,
                         onTap: () {
                           setState(() {
                             print('_increaseQrCode');
                             _increaseQrCode = !_increaseQrCode;
+                            qrData = index.toString();
                           });
-                          // Expanded(
-                          // child: ClipRRect(
-                          //   borderRadius: BorderRadius.circular(24),
-                          //   child: Image.asset(
-                          //     "assets/images/qr_code.png",
-                          //   ),
-                          // ),
-                          // );
                         },
                       ),
                     );
@@ -87,16 +82,17 @@ class _DeelzeScreenState extends State<DeelzeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(24),
-                            child: Image.asset(
-                              "assets/images/qr_code.png",
-                              fit: BoxFit.contain,
+                            child: QrImageView(
+                              data: qrData,
+                              version: QrVersions.auto,
+                              size: 200.0,
                             ),
                           ),
                         ),
                       ),
                       _increaseQrCode
                           ? Positioned(
-                              top: 50,
+                              top: 20,
                               right: 0,
                               child: GestureDetector(
                                 onTap: () {

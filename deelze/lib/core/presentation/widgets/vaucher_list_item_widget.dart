@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class VaucherListItemWidget extends StatefulWidget {
   const VaucherListItemWidget({
@@ -6,15 +7,17 @@ class VaucherListItemWidget extends StatefulWidget {
     required this.title,
     required this.vaucher,
     required this.price,
-    required this.image,
+    this.image,
+    this.qrData,
     required this.favouriteButtonVisibile,
-    this.hasQrCode,
+    this.hasQrCode = false,
     this.onTap,
   });
   final String title;
   final String vaucher;
   final String price;
-  final String image;
+  final String? image;
+  final String? qrData;
   final bool favouriteButtonVisibile;
   final bool? hasQrCode;
   final void Function()? onTap;
@@ -142,15 +145,25 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(24),
                         child: GestureDetector(
-                          onTap: widget.onTap,
-                          child: widget.image == ""
-                              ? Image.network(
-                                  "https://via.placeholder.com/200x200.png?fa=user&bg=3498db&fg=ffffff",
-                                )
-                              : Image.network(
-                                  widget.image,
-                                ),
-                        ),
+                            onTap: widget.onTap,
+                            child: widget.hasQrCode != null &&
+                                    widget.hasQrCode! == true
+                                ? QrImageView(
+                                    data: widget.qrData ?? '',
+                                    version: QrVersions.auto,
+                                  )
+                                : Image.network(widget.image == null ||
+                                        widget.image == ""
+                                    ? "https://via.placeholder.com/200x200.png?fa=user&bg=3498db&fg=ffffff"
+                                    : widget.image!)
+                            // child: widget.image == "" || widget.image == null
+                            //     ? QrImageView(
+                            //         data: widget.qrData ?? '',
+                            //         version: QrVersions.auto,
+                            //         size: 200.0,
+                            //       )
+                            //     : Image.asset(widget.image!),
+                            ),
                       ),
                     ),
                     const SizedBox(width: 16)
@@ -170,7 +183,12 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   image: DecorationImage(
-                    image: Image.asset(widget.image).image,
+                    // image: Image.asset(widget.image).image,
+                    image: widget.image == "" || widget.image == null
+                        ? Image.network(
+                                "https://via.placeholder.com/200x200.png?fa=user&bg=3498db&fg=ffffff")
+                            .image
+                        : Image.network(widget.image!).image,
                   ),
                 ),
               ),

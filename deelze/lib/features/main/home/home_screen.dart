@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             image: logo,
                             price: '190 EGP',
                             favouriteButtonVisibile: true,
+                            hasQrCode: false,
                           ),
                         ),
                       );
