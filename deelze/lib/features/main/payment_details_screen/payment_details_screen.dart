@@ -1,13 +1,25 @@
+import 'package:deelze/features/main/data/order_model/order_model.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class PaymentDetailsScreen extends StatelessWidget {
-  const PaymentDetailsScreen({super.key});
+  const PaymentDetailsScreen({
+    super.key,
+    required this.orderModel,
+  });
+  final OrderModel orderModel;
 
   @override
   Widget build(BuildContext context) {
+    final orderPrice = orderModel.items
+        ?.map((e) => e.price)
+        .toList()
+        .reduce((value, element) => value! + element!);
+    String inputDateString = orderModel.orderTime ?? '';
+    DateTime inputDate = DateTime.parse(inputDateString);
+    String date = DateFormat('yyyy/MM/dd').format(inputDate);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(7, 106, 127, 1),
       body: Stack(
@@ -61,7 +73,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '350 EGP',
+                          orderPrice.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -93,13 +105,14 @@ class PaymentDetailsScreen extends StatelessWidget {
                               context.push(
                                   "${RoutePaths.authWrapper}/${RoutePaths.orderHistory}");
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 28.0),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 28.0),
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Date",
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
@@ -109,10 +122,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
-                                        "21 Dec 2022",
-                                        style: TextStyle(
+                                        date,
+                                        style: const TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
                                               Color.fromRGBO(131, 131, 131, 1),
@@ -122,8 +135,8 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
-                                  Row(
+                                  const SizedBox(height: 20),
+                                  const Row(
                                     children: [
                                       Text(
                                         "Details",
@@ -137,7 +150,8 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       Text(
-                                        "Ali baba restaurant",
+                                        // "Ali baba restaurant",
+                                        '',
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
@@ -148,10 +162,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Reference",
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
@@ -161,10 +175,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
-                                        "25656335",
-                                        style: TextStyle(
+                                        orderModel.orderNumber.toString(),
+                                        style: const TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
                                               Color.fromRGBO(131, 131, 131, 1),
@@ -174,10 +188,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Payment method",
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
@@ -187,10 +201,11 @@ class PaymentDetailsScreen extends StatelessWidget {
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
-                                        "cash",
-                                        style: TextStyle(
+                                        // "cash",
+                                        orderModel.paymentMethod ?? '',
+                                        style: const TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
                                               Color.fromRGBO(131, 131, 131, 1),
@@ -200,13 +215,13 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
-                                  Text(
+                                  const SizedBox(height: 20),
+                                  const Text(
                                       '-----------------------------------------'),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Total payment",
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
@@ -216,10 +231,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
-                                        "350 Egp",
-                                        style: TextStyle(
+                                        orderPrice.toString(),
+                                        style: const TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
                                               Color.fromRGBO(131, 131, 131, 1),
@@ -229,8 +244,8 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
-                                  Row(
+                                  const SizedBox(height: 20),
+                                  const Row(
                                     children: [
                                       Text(
                                         "Fees",
@@ -255,8 +270,8 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
-                                  Row(
+                                  const SizedBox(height: 20),
+                                  const Row(
                                     children: [
                                       Text(
                                         "Taxed",
@@ -281,10 +296,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 80),
+                                  const SizedBox(height: 80),
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Total",
                                         style: TextStyle(
                                           fontFamily: 'Nutrio',
@@ -294,10 +309,11 @@ class PaymentDetailsScreen extends StatelessWidget {
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
-                                        "390 Egp",
-                                        style: TextStyle(
+                                        // "390 Egp",
+                                        orderPrice.toString(),
+                                        style: const TextStyle(
                                           fontFamily: 'Nutrio',
                                           color:
                                               Color.fromRGBO(131, 131, 131, 1),

@@ -1,3 +1,4 @@
+import 'package:deelze/features/main/data/order_model/order_model.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,12 +11,14 @@ class OfferHistoryWidget extends StatefulWidget {
     required this.price,
     required this.date,
     required this.image,
+    required this.orerModel,
   });
   final String title;
   final String vaucher;
   final String price;
   final String date;
   final String image;
+  final OrderModel orerModel;
 
   @override
   State<OfferHistoryWidget> createState() => _OfferHistoryWidgetState();
@@ -112,7 +115,6 @@ class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.5,
                                   color: Colors.white,
                                 ),
                           ),
@@ -124,7 +126,11 @@ class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
                   GestureDetector(
                     onTap: () {
                       context.push(
-                          "${RoutePaths.authWrapper}/${RoutePaths.paymentDetails}");
+                        "${RoutePaths.authWrapper}/${RoutePaths.paymentDetails}",
+                        extra: {
+                          "orderModel": widget.orerModel,
+                        },
+                      );
                     },
                     child: FittedBox(
                       child: Container(
@@ -135,13 +141,12 @@ class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            'Get directions',
+                            'Check Receipt',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.5,
                                   color: Colors.white,
                                 ),
                           ),
@@ -163,7 +168,7 @@ class _OfferHistoryWidgetState extends State<OfferHistoryWidget> {
                     borderRadius: BorderRadius.circular(24),
                     child: ColorFiltered(
                       colorFilter: greyscale,
-                      child: Image.asset(
+                      child: Image.network(
                         widget.image,
                       ),
                     ),

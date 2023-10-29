@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:deelze/features/auth/domain/repository/aut_service.dart';
@@ -110,9 +111,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               //   emit(const AuthState.loggedIn());
               // }
             }
-
+            final userToken =
+                await FirebaseAuth.instance.currentUser?.getIdTokenResult();
             print("USER_CREDENTIALS: $res");
             print("CURRENT_USER: ${FirebaseAuth.instance.currentUser}");
+            log('CURRENT_USER_ACCESS_TOKEN: ${userToken?.token} END');
           } catch (e) {
             emit(const AuthState.loggedOut());
             print(e);
@@ -120,5 +123,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         },
       );
     });
+  }
+
+  final int _maxLength = 2000;
+
+  /// Parse [message], use [skipLengthCut] to cut it or not to cut
+  String _parseMessage(dynamic message, bool skipLengthCut) {
+    final parsedMessage = message?.toString() ?? '';
+
+    // @Note: if don't need to cut, or if message length is less than max length
+    //        that need to cut - just return message
+    if (skipLengthCut || parsedMessage.length < _maxLength) {
+      return parsedMessage;
+    }
+
+    return parsedMessage.substring(0, _maxLength);
   }
 }

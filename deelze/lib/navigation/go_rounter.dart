@@ -14,7 +14,6 @@ import 'package:deelze/navigation/bottom_navigaion_bar.dart';
 import 'package:deelze/navigation/router_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'Home');
@@ -139,7 +138,16 @@ class GoRouterNavigation {
                     GoRoute(
                       path: RoutePaths.paymentDetails,
                       name: RoutePaths.paymentDetails,
-                      builder: (context, state) => const PaymentDetailsScreen(),
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, dynamic>;
+                        final orderModel = extra["orderModel"];
+
+                        if (orderModel != null) {
+                          return PaymentDetailsScreen(orderModel: orderModel);
+                        } else {
+                          return Container();
+                        }
+                      },
                     ),
                   ],
                 ),

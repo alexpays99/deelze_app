@@ -1,6 +1,7 @@
 import 'package:deelze/core/presentation/bloc/timer_bloc.dart';
 import 'package:deelze/core/themes/app_theme.dart';
 import 'package:deelze/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:deelze/features/main/home/order_history/cubit/order_history_cubit.dart';
 import 'package:deelze/firebase_options.dart';
 
 import 'package:deelze/navigation/go_rounter.dart';
@@ -27,6 +28,9 @@ void main() async {
         ),
         BlocProvider<TimerBloc>(
           create: (BuildContext context) => di.getIt<TimerBloc>(),
+        ),
+        BlocProvider<OrderHistoryCubit>(
+          create: (BuildContext context) => di.getIt<OrderHistoryCubit>(),
         ),
       ],
       child: const MyApp(),
