@@ -48,6 +48,7 @@ class _DeelzeScreenState extends State<DeelzeScreen> {
                             qrData = index.toString();
                           });
                         },
+                        index: index,
                       ),
                     );
                   },

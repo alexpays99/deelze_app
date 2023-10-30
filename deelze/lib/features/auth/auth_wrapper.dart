@@ -13,10 +13,11 @@ class AuthWrapper extends StatelessWidget {
       listener: (context, state) {
         state.maybeWhen(
           loggedIn: () {
-            context.replace('${RoutePaths.authWrapper}/${RoutePaths.home}');
+            // context.replace("${RoutePaths.authWrapper}/${RoutePaths.home}");
+            context.go("${RoutePaths.authWrapper}/${RoutePaths.home}");
           },
           loggedOut: () {
-            context.replace('${RoutePaths.authWrapper}/${RoutePaths.intro}');
+            context.replace("${RoutePaths.authWrapper}/${RoutePaths.intro}");
           },
           orElse: () {},
         );

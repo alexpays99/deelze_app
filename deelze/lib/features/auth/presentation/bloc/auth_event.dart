@@ -11,4 +11,5 @@ class AuthEvent with _$AuthEvent {
   const factory AuthEvent.enterCode(String code) = _EnterCode;
   const factory AuthEvent.sendOpt(String? phone) = _SendOPT;
   const factory AuthEvent.verifyOpt(String? phone) = _VerifyOPT;
+  const factory AuthEvent.addUserToCollection() = _AddUserToCollection;
 }

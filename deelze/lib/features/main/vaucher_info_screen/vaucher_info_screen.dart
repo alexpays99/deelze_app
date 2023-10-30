@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:deelze/dependencies.dart';
+import 'package:deelze/features/main/data/servicers/main_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -130,15 +132,20 @@ class _VaucherInfoScreenState extends State<VaucherInfoScreen> {
                                         horizontal: 16.0,
                                         vertical: 4.0,
                                       ),
-                                      child: Text(
-                                        "Claim it",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          // getIt.get<MainService>().claimVaucher();
+                                        },
+                                        child: Text(
+                                          "Claim it",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ),

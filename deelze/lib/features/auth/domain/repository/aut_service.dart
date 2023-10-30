@@ -1,46 +1,18 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deelze/features/auth/domain/repository/user_storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServive {
+  AuthServive({required this.userStorageService});
+
+  final UserStorageService userStorageService;
   User? user;
   String? verificationId;
   String verificationID = "";
   String smsCode = "666666";
 
-  /// send opt
-  // Future<void> sendOtp(
-  //   String phoneNumber,
-  //   Duration timeOut,
-  // ) async {
-  //   final FirebaseAuth auth = FirebaseAuth.instance;
-  //   try {
-  //     await auth.verifyPhoneNumber(
-  //       phoneNumber: phoneNumber,
-  //       timeout: timeOut,
-  //       verificationCompleted: (PhoneAuthCredential credential) async {
-  //         await FirebaseAuth.instance.signInWithCredential(credential).then(
-  //               (value) => print('Logged In Successfully'),
-  //             );
-  //       },
-  //       verificationFailed: (FirebaseAuthException e) {
-  //         if (e.code == 'invalid-phone-number') {
-  //           print('The provided phone number is not valid.');
-  //         }
-  //       },
-  //       codeSent: (String verificationId, int? resendToken) async {
-  //         verificationID = verificationId;
-  //         PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //             verificationId: verificationId, smsCode: smsCode);
-  //         await FirebaseAuth.instance.signInWithCredential(credential);
-  //       },
-  //       codeAutoRetrievalTimeout: (String verificationId) {},
-  //     );
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
   Future<void> sendOtp(
     String phoneNumber,
     Duration timeOut,
@@ -95,42 +67,63 @@ class AuthServive {
   }
 
   // add new user to colledtion of Users
-  Future<void> addUser(String phone) async {
-    CollectionReference users = FirebaseFirestore.instance.collection("Users");
-    // Add the user to the 'users' collection
-    await users.add({
-      "createdAt": DateTime.now().toString(),
-      "name": "moderator",
-      "phone": phone,
-      "email": "",
-      // Add other properties here
-    });
+  Future<void> addUser(
+    String? phone,
+    String? name,
+    String? email,
+    int? age,
+  ) async {
+    try {} catch (e) {
+      print(e);
+    }
+    // final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // final CollectionReference usersCollection =
+    //     firestore.collection("Dealze_User");
+    // Map<String, dynamic> userData = {
+    //   "phone": phone,
+    //   "name": name,
+    //   "email": email,
+    //   "age": age,
+    // };
+    // // // add user to collection
+    // try {
+    //   usersCollection
+    //       .add(userData)
+    //       .then((value) => print("User added with ID: ${value.id}"))
+    //       .catchError((error) => print("Failed to add user: $error"));
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 
   Future<bool> doesUserExist(String phoneNumber) async {
-    final usersCollection = FirebaseFirestore.instance.collection("Users");
-
+    final usersCollection =
+        FirebaseFirestore.instance.collection("Dealze_User");
     final querySnapshot =
         await usersCollection.where("phone", isEqualTo: phoneNumber).get();
-
     return querySnapshot.docs.isNotEmpty;
   }
 
-  // get current authorized user
-  Future<User?> getUser() async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final user = await auth.currentUser;
-    return user;
+  Future<void> updateUserProfile({
+    String? name,
+    String? email,
+    String? phone,
+  }) async {
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+    if (email != null) {
+      await FirebaseAuth.instance.currentUser?.updateEmail(email);
+    }
+    // await FirebaseAuth.instance.currentUser?.updatePhoneNumber(PhoneAuthCredential);
   }
 
-  Future<bool> isLoggedIn() async {
+  Future<void> signOut() async {
     try {
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      final user = _auth.currentUser; //check if user is logged in or not
-      return user != null;
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      await firebaseAuth.signOut();
+      await userStorageService.clearAuthStatus();
+      print("Signed out");
     } catch (e) {
-      print(e);
-      return false;
+      print("User Couldn't be Sign out: $e");
     }
   }
 }

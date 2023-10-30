@@ -1,3 +1,7 @@
+import 'package:deelze/core/presentation/widgets/add_to_favourite_button.dart';
+import 'package:deelze/dependencies.dart';
+import 'package:deelze/features/main/data/favourite_item/favourite_item.dart';
+import 'package:deelze/features/main/data/servicers/hive_service.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -10,6 +14,7 @@ class VaucherListItemWidget extends StatefulWidget {
     this.image,
     this.qrData,
     required this.favouriteButtonVisibile,
+    required this.index,
     this.hasQrCode = false,
     this.onTap,
   });
@@ -20,6 +25,7 @@ class VaucherListItemWidget extends StatefulWidget {
   final String? qrData;
   final bool favouriteButtonVisibile;
   final bool? hasQrCode;
+  final int index;
   final void Function()? onTap;
 
   @override
@@ -29,6 +35,17 @@ class VaucherListItemWidget extends StatefulWidget {
 class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
   bool isFavourite = false;
   bool _qrCodeIncreased = false;
+  late final FavouriteItemModel favouriteItem;
+
+  @override
+  void initState() {
+    favouriteItem = FavouriteItemModel(
+      title: widget.title,
+      vaucher: widget.vaucher,
+      image: widget.image ?? '',
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,16 +148,23 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isFavourite = !isFavourite;
-                        });
-                      },
-                      icon: widget.favouriteButtonVisibile
-                          ? FavouriteIconWidget(isFavourite: isFavourite)
-                          : const SizedBox.shrink(),
-                    ),
+                    widget.favouriteButtonVisibile
+                        ? AddToFavouriteButton(
+                            favouriteItem: favouriteItem,
+                            index: widget.index,
+                            isFavourite: isFavourite,
+                            onPressed: () {
+                              setState(() {
+                                isFavourite = !isFavourite;
+                              });
+                              if (isFavourite) {
+                                getIt.get<HiveService>().insert(favouriteItem);
+                              } else {
+                                getIt.get<HiveService>().delete(widget.index);
+                              }
+                            },
+                          )
+                        : const SizedBox(width: 15),
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(24),
@@ -155,15 +179,7 @@ class _VaucherListItemWidgetState extends State<VaucherListItemWidget> {
                                 : Image.network(widget.image == null ||
                                         widget.image == ""
                                     ? "https://via.placeholder.com/200x200.png?fa=user&bg=3498db&fg=ffffff"
-                                    : widget.image!)
-                            // child: widget.image == "" || widget.image == null
-                            //     ? QrImageView(
-                            //         data: widget.qrData ?? '',
-                            //         version: QrVersions.auto,
-                            //         size: 200.0,
-                            //       )
-                            //     : Image.asset(widget.image!),
-                            ),
+                                    : widget.image!)),
                       ),
                     ),
                     const SizedBox(width: 16)

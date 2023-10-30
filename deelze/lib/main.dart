@@ -19,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await di.InjectionContainer.registerHive();
   runApp(
     MultiBlocProvider(
       providers: [

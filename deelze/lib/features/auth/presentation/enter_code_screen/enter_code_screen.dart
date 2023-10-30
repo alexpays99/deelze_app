@@ -36,8 +36,10 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.maybeWhen(
-          loggedIn: () =>
-              context.go("${RoutePaths.authWrapper}/${RoutePaths.home}"),
+          loggedIn: () {
+            context.read<AuthBloc>().add(const AuthEvent.addUserToCollection());
+            context.go("${RoutePaths.authWrapper}/${RoutePaths.home}");
+          },
           loggedOut: () => ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Login failed"),
@@ -185,9 +187,6 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                           width: 220,
                           height: 60,
                           text: "Send",
-                          // color: state is Running
-                          //     ? const Color.fromARGB(255, 104, 105, 105)
-                          //     : const Color.fromRGBO(7, 105, 127, 1),
                           color: const Color.fromRGBO(7, 105, 127, 1),
                           onTap: () {
                             context.read<AuthBloc>().add(AuthEvent.verifyOpt(

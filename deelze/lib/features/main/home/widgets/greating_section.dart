@@ -1,6 +1,6 @@
 import 'package:deelze/navigation/router_paths.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class GreatingSection extends StatelessWidget {
@@ -77,7 +77,9 @@ class GreatingSection extends StatelessWidget {
                               ),
                               FittedBox(
                                 child: Text(
-                                  'Muhammed',
+                                  FirebaseAuth
+                                          .instance.currentUser?.displayName ??
+                                      '',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium

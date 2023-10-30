@@ -8,11 +8,13 @@ class EditEmailDialogView extends StatelessWidget {
     required this.text,
     required this.onCancel,
     required this.onConfirm,
+    required this.onChanged,
     this.hintText,
   });
   final String text;
   final void Function() onCancel;
   final void Function() onConfirm;
+  final void Function(String) onChanged;
   final String? hintText;
 
   @override
@@ -32,7 +34,7 @@ class EditEmailDialogView extends StatelessWidget {
           borderSide: const BorderSide(
             color: Colors.white,
           ),
-          onChanged: (inputData) {},
+          onChanged: (inputData) => onChanged(inputData),
         ),
       ),
       actions: <Widget>[

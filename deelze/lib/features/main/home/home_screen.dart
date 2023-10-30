@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           restaurants?[index]["location"]["lat"] as double;
                       final longitude =
                           restaurants?[index]["location"]["lng"] as double;
+
                       return Padding(
                         padding: const EdgeInsets.only(
                             left: 20.0, right: 20.0, bottom: 20),
@@ -73,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             price: '190 EGP',
                             favouriteButtonVisibile: true,
                             hasQrCode: false,
+                            index: index,
                           ),
                         ),
                       );

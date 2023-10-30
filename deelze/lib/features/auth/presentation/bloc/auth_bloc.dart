@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:deelze/dependencies.dart';
 import 'package:deelze/features/auth/domain/repository/aut_service.dart';
+import 'package:deelze/features/auth/domain/repository/user_storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,7 +14,7 @@ part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   String? phoneNumber;
-  final AuthServive _authServive = AuthServive();
+  final AuthServive _authServive = getIt.get<AuthServive>();
   StreamSubscription? subscription;
   String verificationID = "";
   String smsCode = "666666";
@@ -22,11 +24,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await event.when(
         logIn: (String email, String password) async {},
         signUp: (String email, String password) async {},
-        signOut: () async {},
+        signOut: () async {
+          try {
+            await _authServive.signOut();
+            emit(const AuthState.loggedOut());
+          } catch (e) {
+            emit(AuthState.failure(e.toString()));
+            print(e);
+          }
+          emit(const AuthState.initial());
+        },
         deleteAccount: () async {},
         checkAuthStatus: () async {
           try {
-            bool authStatus = await false;
+            bool authStatus = await UserStorageService().getAuthStatus();
             if (authStatus) {
               emit(const AuthState.loggedIn());
             } else {
@@ -57,15 +68,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         },
         sendOpt: (phone) async {
           try {
-            // await _authServive.sendOtp(
-            //     phone ?? '', const Duration(seconds: 60));
             await _authServive.sendOtp(
               phone ?? '',
               const Duration(seconds: 60),
               (PhoneAuthCredential credential) async {
                 // ANDROID ONLY!
                 // Sign the user in (or link) with the auto-generated credential
-                // await FirebaseAuth.instance.signInWithCredential(credential);
                 await FirebaseAuth.instance
                     .signInWithCredential(credential)
                     .then(
@@ -84,11 +92,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 // // String smsCode = 'xxxx';
                 // // Create a PhoneAuthCredential with the code
                 verificationID = verificationId;
-
-                // PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                //     verificationId: verificationId, smsCode: smsCode);
-                // // Sign the user in (or link) with the credential
-                // await FirebaseAuth.instance.signInWithCredential(credential);
               },
               (String verificationId) {},
             );
@@ -102,41 +105,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             final res =
                 await _authServive.verifyAndLogin(verificationID, smsCode);
             if (res != null) {
-              emit(const AuthState.loggedIn());
-              // UNCOMMENT THIS CODE WHEN PERMISSIONS TO ADD NEW ITEMS IN COLLECTIONS WILL BE AVAILABLE
-              // final doesUserExist =
-              //     await _authServive.doesUserExist(phoneNumber ?? "");
-              // if (doesUserExist) {
-              //   _authServive.addUser(phoneNumber ?? '');
-              //   emit(const AuthState.loggedIn());
-              // }
+              await getIt
+                  .get<UserStorageService>()
+                  .saveAuthStatus(FirebaseAuth.instance.currentUser);
+              final isAuthorized =
+                  await getIt.get<UserStorageService>().getAuthStatus();
+              if (isAuthorized) {
+                emit(const AuthState.loggedIn());
+              } else {
+                emit(const AuthState.loggedOut());
+              }
             }
             final userToken =
                 await FirebaseAuth.instance.currentUser?.getIdTokenResult();
-            print("USER_CREDENTIALS: $res");
-            print("CURRENT_USER: ${FirebaseAuth.instance.currentUser}");
             log('CURRENT_USER_ACCESS_TOKEN: ${userToken?.token} END');
           } catch (e) {
             emit(const AuthState.loggedOut());
             print(e);
           }
         },
+        addUserToCollection: () async {
+          final currentUser = FirebaseAuth.instance.currentUser;
+          final doesUserExist =
+              await _authServive.doesUserExist(phoneNumber ?? "");
+          if (!doesUserExist) {
+            _authServive.addUser(
+              currentUser?.phoneNumber,
+              '',
+              currentUser?.email ?? '',
+              0,
+            );
+            emit(const AuthState.loggedIn());
+          } else {
+            emit(const AuthState.loggedIn());
+          }
+        },
       );
     });
-  }
-
-  final int _maxLength = 2000;
-
-  /// Parse [message], use [skipLengthCut] to cut it or not to cut
-  String _parseMessage(dynamic message, bool skipLengthCut) {
-    final parsedMessage = message?.toString() ?? '';
-
-    // @Note: if don't need to cut, or if message length is less than max length
-    //        that need to cut - just return message
-    if (skipLengthCut || parsedMessage.length < _maxLength) {
-      return parsedMessage;
-    }
-
-    return parsedMessage.substring(0, _maxLength);
   }
 }
