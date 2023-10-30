@@ -2,11 +2,9 @@ import 'package:deelze/core/keys/box_names.dart';
 import 'package:deelze/core/presentation/widgets/vaucher_list_item_widget.dart';
 import 'package:deelze/features/main/data/favourite_item/favourite_item.dart';
 import 'package:deelze/features/main/home/widgets/greating_section.dart';
-import 'package:deelze/navigation/router_paths.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class FavouriteScreen extends StatelessWidget {

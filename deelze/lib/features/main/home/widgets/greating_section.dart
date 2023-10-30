@@ -165,43 +165,14 @@ class GreatingSection extends StatelessWidget {
               const SizedBox(width: 16),
               image == null
                   ? const SizedBox.shrink()
-                  : GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return IncreacesImage(image: image!);
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 16.0, bottom: 32.0),
-                        child: Image.asset(image ?? ''),
-                        // child: SvgPicture.asset(image ?? ''),
-                      ),
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 16.0, bottom: 32.0),
+                      child: Image.asset(image ?? ''),
                     ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class IncreacesImage extends StatelessWidget {
-  const IncreacesImage({
-    super.key,
-    required this.image,
-  });
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 200,
-      color: Colors.amber,
     );
   }
 }

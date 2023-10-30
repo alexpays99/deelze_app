@@ -13,6 +13,7 @@ class OffersHistoryScreen extends StatefulWidget {
 }
 
 class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
+  bool _isSelected = false;
   @override
   Widget build(BuildContext context) {
     context.read<OrderHistoryCubit>().fetchUserOrderHistory();
@@ -33,63 +34,95 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
               children: [
                 const SizedBox(width: 20),
                 Expanded(
-                  child: SearchAnchor(
-                    isFullScreen: false,
-                    builder:
-                        (BuildContext context, SearchController controller) {
-                      return SearchBar(
-                        backgroundColor: MaterialStateProperty.all(
-                          const Color.fromRGBO(239, 239, 239, 100),
-                        ),
-                        overlayColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 239, 239, 239),
-                        ),
-                        shadowColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        controller: controller,
-                        padding: const MaterialStatePropertyAll<EdgeInsets>(
-                          EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                        onTap: () {
-                          controller.openView();
-                        },
-                        onChanged: (_) {
-                          controller.openView();
-                        },
-                        onSubmitted: (value) {},
-                        trailing: const [
-                          Icon(Icons.search),
-                        ],
-                        hintText: 'Search',
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        hintStyle: MaterialStateProperty.all(
-                          const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      );
-                    },
-                    suggestionsBuilder:
-                        (BuildContext context, SearchController controller) {
-                      return List<ListTile>.generate(
-                        5,
-                        (int index) {
-                          const String item = '25% off on breakfast items';
-                          return ListTile(
-                            title: const Text(
-                              item,
-                              style: TextStyle(fontSize: 16),
+                  child: BlocBuilder<OrderHistoryCubit, OrderHistoryState>(
+                    builder: (context, state) {
+                      return SearchAnchor(
+                        isFullScreen: false,
+                        builder: (BuildContext context,
+                            SearchController controller) {
+                          return SearchBar(
+                            backgroundColor: MaterialStateProperty.all(
+                              const Color.fromRGBO(239, 239, 239, 100),
+                            ),
+                            overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 239, 239, 239),
+                            ),
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            controller: controller,
+                            padding: const MaterialStatePropertyAll<EdgeInsets>(
+                              EdgeInsets.symmetric(horizontal: 16.0),
                             ),
                             onTap: () {
-                              setState(() {
-                                controller.closeView(item);
-                              });
+                              // controller.openView();
+                            },
+                            onChanged: (_) {
+                              controller.openView();
+                              // Future.delayed(const Duration(seconds: 1), () {
+                              //   state.when(
+                              //     initial: () => null,
+                              //     loading: () => null,
+                              //     loaded: (data) => data.where((order) => order.items![0]),
+                              //     error: () => 'Error',
+                              //   );
+                              // });
+                            },
+                            onSubmitted: (value) {
+                              controller.openView();
+                              // context.read<MainService>().;
+                            },
+                            trailing: const [
+                              Icon(Icons.search),
+                            ],
+                            hintText: 'Search',
+                            textStyle: MaterialStateProperty.all(
+                              const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                              ),
+                            ),
+                            hintStyle: MaterialStateProperty.all(
+                              const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                              ),
+                            ),
+                          );
+                        },
+                        suggestionsBuilder: (BuildContext context,
+                            SearchController controller) {
+                          return List<ListTile>.generate(
+                            state.maybeWhen(
+                              loading: () => 0,
+                              loaded: (orders) => orders.length,
+                              orElse: () => 0,
+                            ),
+                            (int index) {
+                              String item = state.maybeWhen(
+                                loading: () => '',
+                                loaded: (orders) =>
+                                    orders
+                                        .map((e) => e.items?.map((e) => e.name))
+                                        .toList()
+                                        .first
+                                        ?.toList()
+                                        .first ??
+                                    '',
+                                orElse: () => '',
+                              );
+                              return ListTile(
+                                title: Text(
+                                  item,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    controller.closeView(item);
+                                  });
+                                },
+                              );
                             },
                           );
                         },
@@ -100,7 +133,18 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
                 const SizedBox(width: 16),
                 FittedBox(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _isSelected = !_isSelected;
+                      });
+                      _isSelected
+                          ? context
+                              .read<OrderHistoryCubit>()
+                              .reverseOrderHistoryList()
+                          : context
+                              .read<OrderHistoryCubit>()
+                              .fetchUserOrderHistory();
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(239, 239, 239, 100),
@@ -121,6 +165,30 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
             BlocBuilder<OrderHistoryCubit, OrderHistoryState>(
               builder: (context, state) {
                 return state.when(
+                  reversedList: (orders) => ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: orders.length,
+                    itemBuilder: (context, index) {
+                      String inputDateString = orders[index].orderTime ?? '';
+                      DateTime inputDate = DateTime.parse(inputDateString);
+                      String formattedDate =
+                          DateFormat('yyyy/MM/dd').format(inputDate);
+
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 20),
+                        child: OfferHistoryWidget(
+                          title: orders[index].items?[0].name ?? '',
+                          vaucher: '',
+                          price:
+                              '${orders[index].items?[0].price.toString()}GP',
+                          image: orders[index].items?[0].logo ?? '',
+                          date: formattedDate,
+                          orerModel: orders[index],
+                        ),
+                      );
+                    },
+                  ),
                   initial: () => const SizedBox.shrink(),
                   loading: () => const Center(
                     child: CircularProgressIndicator(),
@@ -139,7 +207,7 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
                             left: 20.0, right: 20.0, bottom: 20),
                         child: OfferHistoryWidget(
                           title: orders[index].items?[0].name ?? '',
-                          vaucher: '', //'Bab Ali restaurant' ?? '',
+                          vaucher: '',
                           price:
                               '${orders[index].items?[0].price.toString()}GP',
                           image: orders[index].items?[0].logo ?? '',
@@ -165,22 +233,6 @@ class _OffersHistoryScreenState extends State<OffersHistoryScreen> {
                 );
               },
             ),
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: 5,
-            //   itemBuilder: (context, index) {
-            // return const Padding(
-            //   padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-            //   child: OfferHistoryWidget(
-            //     title: '25% off on breakfast items',
-            //     vaucher: 'Bab Ali restaurant',
-            //     price: '13GP',
-            //     image: "assets/images/food.png",
-            //     date: '21/11/23',
-            //   ),
-            // );
-            //   },
-            // )
           ],
         ),
       ),

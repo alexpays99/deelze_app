@@ -6,4 +6,6 @@ class OrderHistoryState with _$OrderHistoryState {
   const factory OrderHistoryState.loading() = _Loading;
   const factory OrderHistoryState.loaded(List<OrderModel> orders) = _Loaded;
   const factory OrderHistoryState.error() = _Error;
+  const factory OrderHistoryState.reversedList(List<OrderModel> orders) =
+      _ReversedList;
 }

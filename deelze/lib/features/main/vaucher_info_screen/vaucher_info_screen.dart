@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'package:deelze/dependencies.dart';
-import 'package:deelze/features/main/data/servicers/main_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
